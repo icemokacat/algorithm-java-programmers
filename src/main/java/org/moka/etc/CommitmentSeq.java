@@ -2,6 +2,8 @@ package org.moka.etc;
 
 // https://www.acmicpc.net/problem/14252
 
+import java.util.Arrays;
+
 public class CommitmentSeq {
 
 	/**
@@ -34,16 +36,58 @@ public class CommitmentSeq {
 	 * hint. 예제 1의 경우에 {43, 2195, 2199}를 추가하면 된다.
 	 * */
 	public static void main(String[] args) {
+		CommitmentSeq seqClass = new CommitmentSeq();
+
+		int[] vals = {2200, 42, 2184, 17};
+		// 1. 오름차순 정렬
+		Arrays.sort(vals);
+
+		// 2. 완전 탐색으로 구하기
+		int result1 = solution1(vals);
+		System.out.println("입력값 : " + Arrays.toString(vals));
+		System.out.println("완전탐색 결과 {" + result1 + "}");
 
 	}
 
-	public int getGcd(int a,int b){
+	public static int solution1(int[] vals){
+		// 사전에 정렬이 되어있다 가정 (오름차순)
+		int count = 0;
+		int len = vals.length;
+		for(int i=0;i<len-1;i++){
+			int a = vals[i];
+			int b = vals[i+1];
+			if (getGcd(a, b) > 1){
+				// 공약수가 1보다 크면, 사이에 수를 추가해야한다.
+				count += getBetweenCount(a, b);
+			}
+		}
+		return count;
+	}
+
+	// 최대공약수
+	public static int getGcd(int a,int b){
 		while (a % b != 0){
 			int temp = a % b;
 			a = b;
 			b = temp;
 		}
 		return b;
+	}
+
+	// 두 수 사이의 사잇값 갯수 찾기
+	public static int getBetweenCount(int a, int b) {
+		// a와 b가 서로소면 추가 불필요
+		if (getGcd(a, b) == 1) return 0;
+
+		// a와 b 사이에 양쪽 모두 서로소인 수가 있으면 1개로 해결
+		for (int p = a + 1; p < b; p++) {
+			if (getGcd(a, p) == 1 && getGcd(p, b) == 1) {
+				return 1;
+			}
+		}
+
+		// 없으면 a+1을 삽입하고, a+1과 b 사이를 재귀로 해결
+		return 1 + getBetweenCount(a + 1, b);
 	}
 
 
