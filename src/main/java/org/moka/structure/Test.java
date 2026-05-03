@@ -2,39 +2,20 @@ package org.moka.structure;
 
 import java.util.ArrayList;
 
+import org.moka.level3.P150367;
 import org.moka.structure.base.RunTimer;
+import org.moka.structure.utils.BSTUtil;
 
 public class Test {
 	public static void main(String[] args){
-		// 이진 트리 장점 테스트
-		// 랜덤 숫자 범위 (1~10,000,000)
-		// 갯수 : 1,000,000
-		int max = 10000000;
+		int[] numbers = {0,1,2,3,4,5,6};
+		BinarySearchTree.Tree tree = new BinarySearchTree.Tree(3);
+		int midIndex = numbers.length / 2;
 
-		// 일반 리스트
-		ArrayList<Integer> list = new ArrayList<>();
-		for (int i = 0; i < 1000000; i++) {
-			int random = (int) (Math.random() * max) + 1;
-			list.add(random);
-		}
+		BSTUtil.insertMiddle(tree, numbers, 0, midIndex - 1);
+		BSTUtil.insertMiddle(tree, numbers, midIndex + 1, 7 - 1);
 
-		// 이진 탐색 트리
-		BinarySearchTree.Tree tree = new BinarySearchTree.Tree(max/2);
-		for (int i = 0; i < 100000; i++){
-			int random = (int) (Math.random() * max) + 1;
-			tree.insert(random);
-		}
-
-		RunTimer timer = new RunTimer();
-		// CASE1 : 오름차순 정렬
-		timer.measure(() -> list.sort(Integer::compareTo));
-
-		timer.measure(tree::getNodesInOrder);
-
-		// CASE2: SEARCH
-		int target = (int) (Math.random() * max) + 1;
-		timer.measure(() -> list.contains(target));
-		timer.measure(() -> tree.search(target));
+		BSTUtil.print(tree);
 
 	}
 

@@ -11,8 +11,8 @@ import org.moka.structure.base.Orders;
 public class BinarySearchTree {
 
 	public static class Node {
-		int value;
-		Node left, right;
+		public int value;
+		public Node left, right;
 
 		Node(int val){
 			value = val;
@@ -21,7 +21,7 @@ public class BinarySearchTree {
 	}
 
 	public static class Tree{
-		Node root;
+		public Node root;
 		public Tree(int n){
 			root = new Node(n);
 		}

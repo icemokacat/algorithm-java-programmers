@@ -1,4 +1,6 @@
-package org.moka.structure;
+package org.moka.structure.utils;
+
+import org.moka.structure.BinarySearchTree;
 
 public class BSTUtil {
 
@@ -129,7 +131,7 @@ public class BSTUtil {
         return tree;
     }
 
-    private static void insertMiddle(BinarySearchTree.Tree tree, int[] arr, int left, int right) {
+    public static void insertMiddle(BinarySearchTree.Tree tree, int[] arr, int left, int right) {
         if (left > right) return;
         int mid = (left + right) / 2;
         tree.insert(arr[mid]);
