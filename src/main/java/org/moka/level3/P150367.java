@@ -105,9 +105,6 @@ public class P150367 {
 	public static boolean isFullBinary(long tenNumber){
 		return (tenNumber & (tenNumber + 1)) == 0;
 	}
-	public static boolean isPerfectBinary(long tenNumber){
-		return (tenNumber & (tenNumber - 1)) == 0;
-	}
 	public static class Node {
 		public int value;
 		public Node left, right;
