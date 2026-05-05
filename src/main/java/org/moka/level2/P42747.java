@@ -64,10 +64,6 @@ public class P42747 {
 		if(max == 0){
 			return 0;
 		}
-		// 논문이 1편인 경우
-		if(totalN == 1){
-			return 1;
-		}
 		// 논문의 총 수가 최솟(인용수)값 보다 작다면
 		// ex) [10,20,14]
 		if(totalN < min){
@@ -94,6 +90,20 @@ public class P42747 {
 			}
 		}
 		return maxH;
+	}
+	public static int getHIndex2(int[] citations){
+		int totalN = citations.length;
+		Arrays.sort(citations);
+		// {0,1,3,5,6}
+		for(int i = 0; i < totalN; i++){
+			// 남은 논문 수 (5-0,5-1,5-4...)
+			int h = totalN - i;
+			// 처음 만족하는 순간이 최댓값
+			if(citations[i] >= h){
+				return h;
+			}
+		}
+		return 0;
 	}
 
 }
