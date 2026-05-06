@@ -2,9 +2,6 @@ package org.moka.level3;
 
 // https://school.programmers.co.kr/learn/courses/30/lessons/150367
 
-import org.moka.structure.BinarySearchTree;
-import org.moka.structure.utils.BSTUtil;
-
 /**
  * Level3
  * 표현 가능한 이진트리

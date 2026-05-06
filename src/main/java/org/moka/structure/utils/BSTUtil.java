@@ -1,6 +1,6 @@
 package org.moka.structure.utils;
 
-import org.moka.structure.BinarySearchTree;
+import org.moka.structure.tree.BinarySearchTree;
 
 public class BSTUtil {
 

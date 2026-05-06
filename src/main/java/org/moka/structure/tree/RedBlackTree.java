@@ -1,4 +1,4 @@
-package org.moka.structure;
+package org.moka.structure.tree;
 
 /**
  * RedBlackTree 는 자가 균형 이진 탐색 트리의 일종으로, 각 노드가 빨간색 또는 검은색으로 색칠되어 있는 트리입니다.

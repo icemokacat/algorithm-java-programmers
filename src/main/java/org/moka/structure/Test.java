@@ -1,9 +1,6 @@
 package org.moka.structure;
 
-import java.util.ArrayList;
-
-import org.moka.level3.P150367;
-import org.moka.structure.base.RunTimer;
+import org.moka.structure.tree.BinarySearchTree;
 import org.moka.structure.utils.BSTUtil;
 
 public class Test {

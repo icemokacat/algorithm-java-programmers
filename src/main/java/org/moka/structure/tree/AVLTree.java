@@ -1,4 +1,4 @@
-package org.moka.structure;
+package org.moka.structure.tree;
 
 /**
  * 균형 이진 탐색 트리(Self-balancing Binary Search Tree)의 일종인 AVL 트리(Adelson-Velsky and Landis Tree)는

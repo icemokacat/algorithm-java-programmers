@@ -1,4 +1,4 @@
-package org.moka.structure;
+package org.moka.structure.tree;
 
 import java.util.LinkedList;
 import java.util.List;
