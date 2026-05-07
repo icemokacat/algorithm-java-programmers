@@ -1,10 +1,13 @@
 package org.moka.structure.graph;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
+
+import org.moka.level3.P49189;
 
 /**
  * 그래프 BFS, DFS 구현
@@ -15,48 +18,76 @@ import java.util.Stack;
 public class GraphSearch {
 	private static Graph createDummyData() {
 		Graph graph = new Graph();
-		graph.addNode(17);
-		graph.addNode(6);
-		graph.addNode(8);
-		graph.addNode(3);
-		graph.addNode(12);
-		graph.addNode(11);
-		graph.addNode(13);
-		graph.addNode(7);
+		graph.addNode(1);
 		graph.addNode(2);
-		graph.addNode(5);
-		graph.addNode(19);
+		graph.addNode(3);
 		graph.addNode(4);
+		graph.addNode(5);
+		graph.addNode(6);
+		graph.addNode(7);
+		graph.addNode(8);
+		graph.addNode(9);
+		graph.addNode(10);
+		graph.addNode(11);
+		graph.addNode(12);
+		graph.addNode(13);
 
-		graph.addEdge(2, 6);
-		graph.addEdge(2, 8);
+		graph.addEdge(1, 2);
+		graph.addEdge(1, 3);
 		graph.addEdge(2, 3);
+		graph.addEdge(2, 4);
+		graph.addEdge(3, 4);
+		graph.addEdge(4, 5);
+		graph.addEdge(6, 7);
 		graph.addEdge(6, 5);
-		graph.addEdge(3, 12);
-		graph.addEdge(3, 11);
-		graph.addEdge(12, 4);
-		graph.addEdge(11, 19);
-		graph.addEdge(5, 7);
-		graph.addEdge(19, 13);
-		graph.addEdge(17, 3);
-		graph.addEdge(4, 8);
-		graph.addEdge(4, 7);
+
+		graph.addEdge(8, 9);
+		graph.addEdge(8, 10);
+		graph.addEdge(9, 11);
+		graph.addEdge(10, 11);
+		graph.addEdge(10, 8);
+		graph.addEdge(11, 12);
+		graph.addEdge(11, 13);
+		return graph;
+	}
+	static Graph create(int n, int[][] edge){
+		Graph graph = new Graph();
+		// 1. 노드 생성
+		for(int i=0;i<n;i++){
+			graph.addNode(i+1);
+		}
+		// 2. Edge 생성
+		for (int[] ints : edge) {
+			graph.addEdge(ints[0], ints[1]);
+		}
 		return graph;
 	}
 
 	public static void main(String[] args) {
 		Graph data = createDummyData();
+		int n = 6;
+		int[][] edge = {
+			{3, 6},
+			{4, 3},
+			{3, 2},
+			{1, 3},
+			{1, 2},
+			{2, 4},
+			{5, 2},
+		};
+		//Graph data = create(n,edge);
 		data.printDot();
 		// 깊이 우선 탐색
-		dfs(data.get(2));
-		data.reset();
+		//dfs(data.get(2));
+		//data.reset();
 		// 넓이 우선 탐색
 		bfs(data.get(2));
 		data.reset();
 
 		// DFS 재귀 형식
-		System.out.println("====================");
-		dfsRecursion(data.get(2), 0);
+		//System.out.println("====================");
+		//dfsRecursion(data.get(2), 0);
+		//data.search(8,13);
 	}
 
 	/**
@@ -112,10 +143,10 @@ public class GraphSearch {
 		System.out.println();
 
 		while (!queue.isEmpty()){
-			//int levelSize = queue.size();
-			//System.out.println("Level " + level + ":");
+			int levelSize = queue.size();
+			System.out.println("Level " + level + ":");
 
-			//for(int i=0;i<levelSize;i++){
+			for(int i=0;i<levelSize;i++){
 				// Loop1. 노드를 꺼내고
 				Node pick = queue.poll();
 				// Loop2. 자기자신을 출력한다.
@@ -130,10 +161,10 @@ public class GraphSearch {
 						node.mark();
 					}
 				}
-			//}
+			}
 
 			System.out.println();
-			//level++;
+			level++;
 		}
 		System.out.println();
 	} // end bfs
@@ -174,6 +205,7 @@ class Graph {
 		Node toNode = this.get(to);
 		if (fromNode != null && toNode != null) {
 			fromNode.neighbors.add(toNode);
+			toNode.neighbors.add(fromNode);
 		}
 	}
 
@@ -185,6 +217,43 @@ class Graph {
 		for(Node node : nodeMap.values()){
 			node.isVisited = false;
 		}
+	}
+
+	public boolean search(int from, int to){
+		return search(this.get(from), this.get(to));
+	}
+	public boolean search(Node start, Node end){
+		this.reset();
+		ArrayList<Node> searchList = new ArrayList<>();
+
+		// BFS 방식으로 탐색
+		Queue<Node> queue = new LinkedList<>();
+		queue.add(start);
+		searchList.add(start);
+		start.mark();
+
+		while (!queue.isEmpty()){
+			Node root = queue.poll();
+			if(root == end){
+				for(Node node : searchList){
+					System.out.print(node.value + " -> ");
+					if(node == end){
+						System.out.print(" end ");
+					}
+				}
+				return true;
+			}
+			for(Node node : root.neighbors){
+				if(!node.isVisited){
+					searchList.add(node);
+					queue.add(node);
+					node.mark();
+				}
+			}
+		}
+		System.out.println();
+
+		return false;
 	}
 
 	public void printDot() {
